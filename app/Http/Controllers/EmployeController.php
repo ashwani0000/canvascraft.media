@@ -114,6 +114,8 @@ class EmployeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $findRow = EmployeModel::find($id);
+        $findRow->delete();
+        return redirect('/employes');
     }
 }

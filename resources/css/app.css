@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+a:hover{
+    background-color: rgb(236, 151, 151);
+    color: darkred;
+}
+
+a{
+    color: white; background-color: brown;padding:10px;border-radius: 10px;
+}

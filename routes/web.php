@@ -30,3 +30,5 @@ Route::get('/employes/create', [App\Http\Controllers\EmployeController::class, '
 Route::post('/employee/save', [App\Http\Controllers\EmployeController::class ,'store']);
 
 Route::get('/employes', [App\Http\Controllers\EmployeController::class , 'index']);
+
+Route::delete("/employes/{row_id}", [App\Http\Controllers\EmployeController::class , 'destroy']);

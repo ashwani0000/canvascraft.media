@@ -11,7 +11,7 @@
 <div class="container">
     <div class="links">
         <a href="/dashboard">Go Back</span></a>
-        <a href="/employes/create" style="color: white; background-color: brown;padding:10px;border-radius: 10px;">Add Employee</a> 
+        <a href="/employes/create">Add Employee</a> 
     </div>
 
 <!-- {{$employes}} -->
@@ -23,12 +23,18 @@
         </tr>
 
 @foreach($employes as $employe)
-    <tr>
+    <tr id = "{{$employe->id}}">
         <td class="name">{{$employe->name}}</td>
         <td class="email">{{$employe->email}}</td>
-        <td>
-            <a>Edit</a>
-            <a>Delete</a>
+        <td class="actions">
+            <a href="/employes/{{$employe->id}}/edit">Edit</a>
+            <!-- <a href="/employes/{{$employe->id}}"> -->
+                <form method="POST" action="/employes/{{$employe->id}}">
+                    @csrf
+                    @method('delete')
+                   <input class="input_delete" type="submit" value="Delete">
+                </form>
+            <!-- </a> -->
         </td>
     </tr>
 @endforeach
