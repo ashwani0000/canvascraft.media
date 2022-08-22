@@ -1,0 +1,41 @@
+.container{
+    margin-top:40px;
+}
+
+table{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: 100vw;
+}
+
+tbody{
+    padding: 50px;
+    border: 1px solid brown;
+    /* border-radius: 40px; */
+    background-color: rgb(75, 41, 41);
+}
+
+tr{
+    padding: 20px;
+    width: 500px;
+}
+
+td{
+    color: aliceblue;
+    background-color: rgba(60, 38, 38, 0.941);
+    padding: 20px;
+}
+
+a{
+    color: white; background-color: brown;padding:10px;border-radius: 10px; text-decoration: none;margin: 10px;
+}
+
+.links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+}
