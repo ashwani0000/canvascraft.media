@@ -8,6 +8,13 @@ table{
     align-items: center;
     height: 80%;
     width: 100vw;
+    border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+}
+
+td{
+    width: 300px;
 }
 
 tbody{
@@ -26,10 +33,15 @@ td{
     color: aliceblue;
     background-color: rgba(60, 38, 38, 0.941);
     padding: 20px;
+    border: 0.1px solid rgb(250, 132, 132);
 }
 
 a{
-    color: white; background-color: brown;padding:10px;border-radius: 10px; text-decoration: none;margin: 10px;
+    color: black; border: 1px solid black; background-color: transparent;padding:10px; text-decoration: none;margin: 10px;
+}
+a:hover{
+    border: 1px solid rgb(212, 249, 6);
+    outline: rgb(212, 249, 6),solid,20px;
 }
 
 .links{
@@ -48,18 +60,33 @@ a{
 
 .actions input{
     color: white;
-    border: none; 
-    background-color: brown;
+    border: 1px solid white; 
+    background-color: transparent;
     padding:10px;
-    border-radius: 10px; 
     text-decoration: none;
     margin: 10px;
     font-size: 16px;
     cursor: pointer;
 }
 
-
-.input_delete:hover , a:hover{
-    background-color: rgb(236, 151, 151);
-    color: darkred;
+a.edit{
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 10px 20px;
 }
+
+.input_delete:hover , a.edit:hover{
+    border: 1px solid rgb(212, 249, 6);
+}
+
+.trContainer{
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+}
+
+a.edit::hover{
+    border: 1px solid white;
+}
+

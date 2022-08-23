@@ -15,7 +15,9 @@
     </div>
 
 <!-- {{$employes}} -->
+<div class="trContainer">
 <table>
+
         <tr>
             <td>Name</td>
             <td>Email</td>
@@ -27,7 +29,7 @@
         <td class="name">{{$employe->name}}</td>
         <td class="email">{{$employe->email}}</td>
         <td class="actions">
-            <a href="/employes/{{$employe->id}}/edit">Edit</a>
+            <a href="/employes/{{$employe->id}}/edit" class="edit">Edit</a>
             <!-- <a href="/employes/{{$employe->id}}"> -->
                 <form method="POST" action="/employes/{{$employe->id}}">
                     @csrf
@@ -37,8 +39,11 @@
             <!-- </a> -->
         </td>
     </tr>
+
 @endforeach
+
 </table>
+</div>
 </div>
 
 </body>

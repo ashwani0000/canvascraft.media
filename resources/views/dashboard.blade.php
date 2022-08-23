@@ -13,7 +13,7 @@
                     <!-- {{auth()->user()}} -->
 
                     <div style="text-align: center;margin-top:20px;">
-                    <a href="/employes" style="color: white; background-color: brown;padding:10px;border-radius: 10px;">Go to Employes</a>
+                    <a href="/employes" style="color: white; background-color: brown;padding:10px;border-radius: 10px;">Employes</a>
         <!-- <a href="/employes/create" style="color: white; background-color: brown;padding:10px;border-radius: 10px;">Add Employee</a> -->
         <!-- <a href="/show/{{auth()->user()->id}}" style="color: white; background-color: brown;padding:10px;border-radius: 10px;">Show Employes</a> -->
         </div>

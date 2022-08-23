@@ -48,7 +48,7 @@ class EmployeController extends Controller
         $employee->user_id = auth()->user()->id;
 
         $request->validate([
-            'name' => 'required|unique:employe|max:10|min:5',
+            'name' => 'required|max:10|min:5',
             'email' => 'required|email',
         ]);
 
@@ -91,7 +91,14 @@ class EmployeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employeDetail = EmployeModel::find($id);
+        $employeName = $employeDetail->name;
+        $employeEmail = $employeDetail->email;
+        $employeId = $employeDetail->id;
+
+        // dd($employeName,$employeDetail,$employeEmail);
+
+        return view('employes.editEmploye', ['employeName' => $employeName, 'employeEmail' => $employeEmail, 'employeId' => $employeId]);
     }
 
     /**
@@ -103,7 +110,13 @@ class EmployeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updatedName = $request->input('name');
+        $updatedEmail = $request-> input('email');
+
+        DB::table('employe')->where('id',$id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
+        
+        return redirect('/employes');
+
     }
 
     /**

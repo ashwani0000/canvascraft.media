@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*,body{
+    background-color: rgb(102, 103, 105);
+}
+
 a:hover{
     background-color: rgb(236, 151, 151);
     color: darkred;
