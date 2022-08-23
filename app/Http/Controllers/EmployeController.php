@@ -13,6 +13,7 @@ class EmployeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         $user_idd = auth()->user()->id;
