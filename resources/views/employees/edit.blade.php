@@ -11,22 +11,22 @@
 
 
 <div class="links" style="margin-top: 20px;display: flex;justify-content: center;">
-    <a href="/employes" style="color: white; background-color: brown;padding:10px;border-radius: 10px;text-decoration:none;margin-top: 40px;">Go Back</span></a>
+    <a href="{{url()->previous()}}" style="color: white; background-color: brown;padding:10px;border-radius: 10px;text-decoration:none;margin-top: 40px;">Go Back</span></a>
 </div>
     <div class="addemployeContainer">
-    <form method="POST" action="/employes/{{$employeId}}">
+    <form method="POST" action="{{route('employees.update', ['employee' => $employeeId])}}">
         @csrf
         @method('put')
         <div class="name">
         <label for="name" class="m-right">Name</label>
-        <input type="text" class="input" name="name" value={{$employeName}} placeholder="name" />
+        <input type="text" class="input" name="name" value={{$employeeName}} placeholder="name" />
         </div>
         @error('name')
             <div class="error">{{ $message }}</div>
         @enderror
         <div class="email">
         <label for="email" class="m-right">email</label>
-        <input type="text" class="input" name="email" value={{$employeEmail}} placeholder="email" />
+        <input type="text" class="input" name="email" value={{$employeeEmail}} placeholder="email" />
         </div>
         @error('email')
             <div class="error">{{ $message }}</div>

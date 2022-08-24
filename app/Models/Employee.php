@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class EmployeModel extends Model
+class Employee extends Model
 {
     public $table = "employe";
     use HasFactory;
@@ -14,4 +15,11 @@ class EmployeModel extends Model
         'name',
         'email'
     ];
+    
+    public function getEmployeesOfaCompany(){
+        $user_idd = auth()->user()->id;
+
+        $employeArray = DB::table('employe')->where('user_id', $user_idd)->get();
+        return $employeArray;
+    }
 }

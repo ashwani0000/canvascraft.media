@@ -22,10 +22,10 @@
 
 @if($errors->any()) <li>{{$errors->name}}</li> @endif -->
 <div class="links" style="margin-top: 20px;display: flex;justify-content: center;">
-    <a href="/employes" style="color: white; background-color: brown;padding:10px;border-radius: 10px;text-decoration:none;margin-top: 40px;">Go Back</span></a>
+    <a href="{{route('employees.index')}}" style="color: white; background-color: brown;padding:10px;border-radius: 10px;text-decoration:none;margin-top: 40px;">Go Back</span></a>
 </div>
     <div class="addemployeContainer">
-    <form method="POST" action="/employee/save">
+    <form method="POST" action="{{route('employees.store')}}">
         @csrf
         <div class="name">
         <label for="name" class="m-right">Name</label>

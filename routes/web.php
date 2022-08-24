@@ -24,12 +24,12 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('employe', App\Http\Controllers\EmployeController::class);
-Route::get('/employes/create', [App\Http\Controllers\EmployeController::class, 'create']);
-// Route::get('/show/{user_id}', [App\Http\Controllers\EmployeController::class ,'show']);  
-Route::post('/employee/save', [App\Http\Controllers\EmployeController::class ,'store']);
+Route::resources(['employees' => EmployeController::class]);
+// Route::get('/show/{user_id}', [App\Http\Controllers\EmployeController::class ,'show'])->name('employees.show');  
+// Route::get('/employees/create', [App\Http\Controllers\EmployeController::class, 'create'])->name('employees.create');
+// Route::post('/employee/save', [App\Http\Controllers\EmployeController::class ,'store'])->name('employees.store');
 
-Route::get('/employes', [App\Http\Controllers\EmployeController::class , 'index']);
-Route::get('/employes/{id}/edit', [App\Http\Controllers\EmployeController::class , 'edit']);
-Route::put('/employes/{id}', [App\Http\Controllers\EmployeController::class , 'update']);
-Route::delete("/employes/{row_id}", [App\Http\Controllers\EmployeController::class , 'destroy']);
+// Route::get('/employees', [App\Http\Controllers\EmployeController::class , 'index'])->name('employees.index');
+// Route::get('/employees/{id}/edit', [App\Http\Controllers\EmployeController::class , 'edit'])->name('employees.edit');
+// Route::put('/employees/{id}', [App\Http\Controllers\EmployeController::class , 'update'])->name('employees.update');
+// Route::delete("/employees/{row_id}", [App\Http\Controllers\EmployeController::class , 'destroy'])->name('employees.destroy');

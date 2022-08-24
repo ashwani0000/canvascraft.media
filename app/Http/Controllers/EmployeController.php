@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmployeModel;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,16 +13,14 @@ class EmployeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
     public function index()
     {
-        $user_idd = auth()->user()->id;
-
-        $employeArray = DB::table('employe')->where('user_id', $user_idd)->get();
-        return view('employes.employe', ['employes'=> $employeArray]);
-
-
+        $emloyeesAllofCompany = new Employee;
+        $employeesofacompany = $emloyeesAllofCompany->getEmployeesOfaCompany();
+        return view("employees.index", ['employees'=> $employeesofacompany]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +29,7 @@ class EmployeController extends Controller
      */
     public function create()
     {
-        return view('employes.addemploye');
+        return view('employees.create');
     }
 
     /**
@@ -42,7 +40,7 @@ class EmployeController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new EmployeModel;
+        $employee = new Employee;
 
         $employee->name = $request->input('name');
         $employee->email = $request->input('email');
@@ -57,7 +55,7 @@ class EmployeController extends Controller
         
         $employee->save();
 
-        return redirect('/employes');
+        return redirect()->route('employees.index');
 
     }
 
@@ -69,6 +67,13 @@ class EmployeController extends Controller
      */
     public function show($user_id)
     {
+        $employeeDetail = Employee::find($user_id);
+        $employeeName = $employeeDetail->name;
+        $employeeEmail = $employeeDetail->email;
+        $employeeId  = $employeeDetail->id;
+        
+        return view('employees.show', ['employeeName' => $employeeName, 'employeeEmail' => $employeeEmail, 'employeeId' => $employeeId]);
+
         // $employeArray = DB::table('employe')->where('user_id', $user_id)->get();
         
        
@@ -92,14 +97,15 @@ class EmployeController extends Controller
      */
     public function edit($id)
     {
-        $employeDetail = EmployeModel::find($id);
-        $employeName = $employeDetail->name;
-        $employeEmail = $employeDetail->email;
-        $employeId = $employeDetail->id;
+        // dd($id);
+        $employeeDetail = Employee::find($id);
+        $employeeName = $employeeDetail->name;
+        $employeeEmail = $employeeDetail->email;
+        $employeeId = $employeeDetail->id;
 
         // dd($employeName,$employeDetail,$employeEmail);
 
-        return view('employes.editEmploye', ['employeName' => $employeName, 'employeEmail' => $employeEmail, 'employeId' => $employeId]);
+        return view('employees.edit', ['employeeName' => $employeeName, 'employeeEmail' => $employeeEmail, 'employeeId' => $employeeId]);
     }
 
     /**
@@ -116,7 +122,7 @@ class EmployeController extends Controller
 
         DB::table('employe')->where('id',$id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
         
-        return redirect('/employes');
+        return redirect()->route('employees.index');
 
     }
 
@@ -128,8 +134,8 @@ class EmployeController extends Controller
      */
     public function destroy($id)
     {
-        $findRow = EmployeModel::find($id);
+        $findRow = Employee::find($id);
         $findRow->delete();
-        return redirect('/employes');
+        return redirect()->route('employees.index');
     }
 }
