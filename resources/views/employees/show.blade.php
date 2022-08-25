@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/showemploye.css') }}">
-    <title>Document</title>
-</head>
-<body>
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/showemploye.css') }}">
 
 <div class="links" style="margin-top: 20px;display: flex;justify-content: center;">
     <a href="/employees">Go Back</span></a>
@@ -23,13 +14,13 @@
                 <td>Action</td>
             </tr>
             <tr>
-                <td class="name">{{$employeeName}}</td>
-                <td class="email">{{$employeeEmail}}</td>
-                <!-- <td>{{$employeeId}}</td> -->
-                <td class="actions">
-                    <a href="{{ route('employees.edit' , [ 'employee' => $employeeId ]) }}" class="edit">Edit</a>
+                <td class="name">{{$employeeDetail->name}}</td>
+                <td class="email">{{$employeeDetail->email}}</td>
 
-                    <form method="POST" action="{{ route('employees.destroy', [ 'employee' => $employeeId ]) }}">
+                <td class="actions">
+                    <a href="{{ route('employees.edit' , [ 'employee' => $employeeDetail->id ]) }}" class="edit">Edit</a>
+
+                    <form method="POST" style="margin: 0;" action="{{ route('employees.destroy', [ 'employee' => $employeeDetail->id ]) }}">
                         @csrf
                         @method('delete')
                         <input class="input_delete" type="submit" value="Delete">
@@ -40,6 +31,3 @@
     </table>
 
     </div>
-
-</body>
-</html>

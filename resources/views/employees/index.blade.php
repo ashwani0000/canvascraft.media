@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/showemploye.css') }}">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/showemploye.css') }}">
+
 <div class="container">
     <div class="links">
         <a href="/dashboard">Go Back</span></a>
@@ -34,7 +27,7 @@
             <a href="{{ route('employees.edit', [ 'employee' => $employee->id ]) }}" class="edit">Edit</a>
             <a href="{{ route('employees.show', [ 'employee' => $employee->id]) }}" class="edit">Show</a>
 
-                <form method="POST" action="{{ route('employees.destroy', [ $id => $employee->id ]) }}">
+                <form method="POST" style="margin-bottom: 0;" action="{{ route('employees.destroy', [ $id => $employee->id ]) }}">
                     @csrf
                     @method('delete')
                    <input class="input_delete" type="submit" value="Delete">
@@ -51,6 +44,3 @@
 </table>
 </div>
 </div>
-
-</body>
-</html>

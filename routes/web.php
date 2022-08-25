@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\EmployeeController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
- 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,12 +25,18 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resources(['employees' => EmployeController::class]);
-// Route::get('/show/{user_id}', [App\Http\Controllers\EmployeController::class ,'show'])->name('employees.show');  
-// Route::get('/employees/create', [App\Http\Controllers\EmployeController::class, 'create'])->name('employees.create');
-// Route::post('/employee/save', [App\Http\Controllers\EmployeController::class ,'store'])->name('employees.store');
+Route::resources(['employees' => EmployeeController::class]);
 
-// Route::get('/employees', [App\Http\Controllers\EmployeController::class , 'index'])->name('employees.index');
-// Route::get('/employees/{id}/edit', [App\Http\Controllers\EmployeController::class , 'edit'])->name('employees.edit');
-// Route::put('/employees/{id}', [App\Http\Controllers\EmployeController::class , 'update'])->name('employees.update');
-// Route::delete("/employees/{row_id}", [App\Http\Controllers\EmployeController::class , 'destroy'])->name('employees.destroy');
+// Route::resource('employees', EmployeeController::class)
+//         ->missing(function (Request $request) {
+//             dd($request);
+//             return Redirect::route('/dashboard');
+//         });
+// Route::get('/show/{user_id}', [App\Http\Controllers\EmployeeController::class ,'show'])->name('employees.show');  
+// Route::get('/employees/create', [App\Http\Controllers\EmployeeController::class, 'create'])->name('employees.create');
+// Route::post('/employee/save', [App\Http\Controllers\EmployeeController::class ,'store'])->name('employees.store');
+
+// Route::get('/employees', [App\Http\Controllers\EmployeeController::class , 'index'])->name('employees.index');
+// Route::get('/employees/{id}/edit', [App\Http\Controllers\EmployeeController::class , 'edit'])->name('employees.edit');
+// Route::put('/employees/{id}', [App\Http\Controllers\EmployeeController::class , 'update'])->name('employees.update');
+// Route::delete("/employees/{row_id}", [App\Http\Controllers\EmployeeController::class , 'destroy'])->name('employees.destroy');

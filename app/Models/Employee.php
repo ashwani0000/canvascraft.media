@@ -13,13 +13,8 @@ class Employee extends Model
     // protected $primaryKey = 'user_id';
     protected $fillable = [
         'name',
-        'email'
+        'email',
+        // 'user_id'
     ];
     
-    public function getEmployeesOfaCompany(){
-        $user_idd = auth()->user()->id;
-
-        $employeArray = DB::table('employe')->where('user_id', $user_idd)->get();
-        return $employeArray;
-    }
 }

@@ -6,7 +6,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class EmployeController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,16 @@ class EmployeController extends Controller
      */
     public function index()
     {
-        $emloyeesAllofCompany = new Employee;
-        $employeesofacompany = $emloyeesAllofCompany->getEmployeesOfaCompany();
-        return view("employees.index", ['employees'=> $employeesofacompany]);
+
+        $user_idd = auth()->user()->id;
+        
+        $employeeArray = Employee::where( 'user_id' , $user_idd)->get();
+        // $employeArray = DB::table('employe')->where('user_id', $user_idd)->get();
+        // return $employeeArray;
+
+        // $emloyeesAllofCompany = new Employee;
+        // $employeesofacompany = $emloyeesAllofCompany->getEmployeesOfaCompany();
+        return view("employees.index", ['employees'=> $employeeArray]);
     }
 
 
@@ -65,14 +72,12 @@ class EmployeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id)
+    public function show($id)
     {
-        $employeeDetail = Employee::find($user_id);
-        $employeeName = $employeeDetail->name;
-        $employeeEmail = $employeeDetail->email;
-        $employeeId  = $employeeDetail->id;
+        $employeeDetail = Employee::find($id);
+
         
-        return view('employees.show', ['employeeName' => $employeeName, 'employeeEmail' => $employeeEmail, 'employeeId' => $employeeId]);
+        return view('employees.show', ['employeeDetail' => $employeeDetail]);
 
         // $employeArray = DB::table('employe')->where('user_id', $user_id)->get();
         
@@ -99,13 +104,7 @@ class EmployeController extends Controller
     {
         // dd($id);
         $employeeDetail = Employee::find($id);
-        $employeeName = $employeeDetail->name;
-        $employeeEmail = $employeeDetail->email;
-        $employeeId = $employeeDetail->id;
-
-        // dd($employeName,$employeDetail,$employeEmail);
-
-        return view('employees.edit', ['employeeName' => $employeeName, 'employeeEmail' => $employeeEmail, 'employeeId' => $employeeId]);
+        return view('employees.edit', ['employeeDetail' => $employeeDetail]);
     }
 
     /**
@@ -120,7 +119,14 @@ class EmployeController extends Controller
         $updatedName = $request->input('name');
         $updatedEmail = $request-> input('email');
 
-        DB::table('employe')->where('id',$id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
+        $request->validate([
+            'name' => 'required|max:10|min:5',
+            'email' => 'required|email',
+        ]);
+
+        Employee::where('id', $id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
+
+        // DB::table('employe')->where('id',$id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
         
         return redirect()->route('employees.index');
 
