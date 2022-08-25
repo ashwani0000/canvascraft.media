@@ -18,7 +18,6 @@
         </tr>
 
 @foreach($employees as $employee)
-    <!-- {{$id = $employee->id}} -->
     <tr id = "{{$employee->id}}">
         
         <td class="name">{{$employee->name}}</td>
@@ -27,17 +26,14 @@
             <a href="{{ route('employees.edit', [ 'employee' => $employee->id ]) }}" class="edit">Edit</a>
             <a href="{{ route('employees.show', [ 'employee' => $employee->id]) }}" class="edit">Show</a>
 
-                <form method="POST" style="margin-bottom: 0;" action="{{ route('employees.destroy', [ $id => $employee->id ]) }}">
+                <form method="POST" style="margin-bottom: 0;" action="{{ route('employees.destroy', [ 'employee' => $employee->id ]) }}">
                     @csrf
                     @method('delete')
                    <input class="input_delete" type="submit" value="Delete">
-                </form>
-            
+                </form>   
         </td>
         
     </tr>
-
-
 </div>
 @endforeach
 

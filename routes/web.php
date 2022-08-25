@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,9 @@ Route::resources(['employees' => EmployeeController::class]);
 //             dd($request);
 //             return Redirect::route('/dashboard');
 //         });
-// Route::get('/show/{user_id}', [App\Http\Controllers\EmployeeController::class ,'show'])->name('employees.show');  
+// Route::get('/show/{id}', [App\Http\Controllers\EmployeeController::class ,'show'])->name('employees.show');  
+Route::get('/employees/{employee:id}', [App\Http\Controllers\EmployeeController::class, 'show'])->name('employees.show');  
+
 // Route::get('/employees/create', [App\Http\Controllers\EmployeeController::class, 'create'])->name('employees.create');
 // Route::post('/employee/save', [App\Http\Controllers\EmployeeController::class ,'store'])->name('employees.store');
 

@@ -15,15 +15,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-
-        $user_idd = auth()->user()->id;
-        
-        $employeeArray = Employee::where( 'user_id' , $user_idd)->get();
-        // $employeArray = DB::table('employe')->where('user_id', $user_idd)->get();
-        // return $employeeArray;
-
-        // $emloyeesAllofCompany = new Employee;
-        // $employeesofacompany = $emloyeesAllofCompany->getEmployeesOfaCompany();
+        $userid = auth()->user()->id;
+        $employeeArray = Employee::where( 'user_id' , $userid)->get();
         return view("employees.index", ['employees'=> $employeeArray]);
     }
 
@@ -57,11 +50,7 @@ class EmployeeController extends Controller
             'name' => 'required|max:10|min:5',
             'email' => 'required|email',
         ]);
-
-        
-        
         $employee->save();
-
         return redirect()->route('employees.index');
 
     }
@@ -72,26 +61,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        $employeeDetail = Employee::find($id);
-
-        
+        $employeeDetail = $employee;    
         return view('employees.show', ['employeeDetail' => $employeeDetail]);
-
-        // $employeArray = DB::table('employe')->where('user_id', $user_id)->get();
-        
-       
-
-        // return view('employes.employe', ['employes'=> $employeArray]);
-         // print_r($employeArray);
-
-        
-        // $employeDetails = DB::table('employe')->select('name','email')->get();
-
-        // print_r($employeDetails);
-        // $employe = $employeArray
-
     }
 
     /**
@@ -100,10 +73,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
-        // dd($id);
-        $employeeDetail = Employee::find($id);
+        $employeeDetail = $employee;
         return view('employees.edit', ['employeeDetail' => $employeeDetail]);
     }
 
@@ -125,11 +97,7 @@ class EmployeeController extends Controller
         ]);
 
         Employee::where('id', $id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
-
-        // DB::table('employe')->where('id',$id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
-        
         return redirect()->route('employees.index');
-
     }
 
     /**

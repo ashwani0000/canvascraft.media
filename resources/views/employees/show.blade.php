@@ -16,10 +16,8 @@
             <tr>
                 <td class="name">{{$employeeDetail->name}}</td>
                 <td class="email">{{$employeeDetail->email}}</td>
-
                 <td class="actions">
                     <a href="{{ route('employees.edit' , [ 'employee' => $employeeDetail->id ]) }}" class="edit">Edit</a>
-
                     <form method="POST" style="margin: 0;" action="{{ route('employees.destroy', [ 'employee' => $employeeDetail->id ]) }}">
                         @csrf
                         @method('delete')
