@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
@@ -13,10 +15,13 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Employee $employee)
     {
+
+        
+
         $userid = auth()->user()->id;
-        $employeeArray = Employee::where( 'user_id' , $userid)->get();
+        $employeeArray = $employee->where( 'user_id' , $userid)->orderBy('name')->get();
         return view("employees.index", ['employees'=> $employeeArray]);
     }
 
@@ -38,18 +43,20 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Employee $employee)
     {
-        $employee = new Employee;
-
+        
         $employee->name = $request->input('name');
         $employee->email = $request->input('email');
         $employee->user_id = auth()->user()->id;
+        ($employee->user()->associate($request->user()));
+        
 
         $request->validate([
             'name' => 'required|max:10|min:5',
             'email' => 'required|email',
         ]);
+
         $employee->save();
         return redirect()->route('employees.index');
 
@@ -86,7 +93,7 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Employee $employee)
     {
         $updatedName = $request->input('name');
         $updatedEmail = $request-> input('email');
@@ -96,7 +103,7 @@ class EmployeeController extends Controller
             'email' => 'required|email',
         ]);
 
-        Employee::where('id', $id)->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
+        $employee->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
         return redirect()->route('employees.index');
     }
 
@@ -106,10 +113,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        $findRow = Employee::find($id);
-        $findRow->delete();
+
+        $employee->delete();
         return redirect()->route('employees.index');
     }
 }

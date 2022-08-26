@@ -15,4 +15,11 @@ class Employee extends Model
         'email',
     ];
     
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'user_id');
+    }
+
+    // protected $primaryKey = 'user_id';
+
 }
