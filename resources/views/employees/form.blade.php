@@ -1,6 +1,6 @@
         <div class="name">
         <label for="name" class="m-right">Name</label>
-        <input type="text" class="input" name="name" value= "@if(isset($employee->name)){{ $employee->name}}@endif" placeholder="name" />
+        <input type="text" autofocus class="input" name="name" value= "@if(isset($employee->name)){{ $employee->name}}@endif" placeholder="name" />
         </div>
         @error('name')
             <div class="error">{{ $message }}</div>

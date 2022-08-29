@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
 
 class EmployeeController extends Controller
 {
@@ -15,14 +14,12 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Employee $employee)
+    public function index(User $user)
     {
-
-        
-
         $userid = auth()->user()->id;
-        $employeeArray = $employee->where( 'user_id' , $userid)->orderBy('name')->get();
-        return view("employees.index", ['employees'=> $employeeArray]);
+        $employees = $user->find($userid)->employee;
+        $employeesArray = $employees->sortBy('name');
+        return view("employees.index", ['employees' => $employeesArray]);
     }
 
 
@@ -53,7 +50,7 @@ class EmployeeController extends Controller
         
 
         $request->validate([
-            'name' => 'required|max:10|min:5',
+            'name' => 'required|max:13|min:3',
             'email' => 'required|email',
         ]);
 
@@ -99,7 +96,7 @@ class EmployeeController extends Controller
         $updatedEmail = $request-> input('email');
 
         $request->validate([
-            'name' => 'required|max:10|min:5',
+            'name' => 'required|max:13|min:3',
             'email' => 'required|email',
         ]);
 

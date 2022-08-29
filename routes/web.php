@@ -29,4 +29,6 @@ Route::get('/employees/{employee:id}', [App\Http\Controllers\EmployeeController:
 Route::get('/employees/{employee:id}/edit', [App\Http\Controllers\EmployeeController::class , 'edit'])->name('employees.edit');
 Route::put('/employees/{employee:id}', [App\Http\Controllers\EmployeeController::class , 'update'])->name('employees.update');
 Route::delete("/employees/{employee:id}", [App\Http\Controllers\EmployeeController::class , 'destroy'])->name('employees.destroy');
-
+Route::any('{query}',
+    function() { return redirect('/'); })
+    ->where('query', '.*');
