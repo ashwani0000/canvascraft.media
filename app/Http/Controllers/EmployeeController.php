@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\User;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -16,10 +17,7 @@ class EmployeeController extends Controller
      */
     public function index(User $user)
     {
-        $userid = auth()->user()->id;
-        $employees = $user->find($userid)->employee;
-        $employeesArray = $employees->sortBy('name');
-        return view("employees.index", ['employees' => $employeesArray]);
+        return view("employees.index", ['employees' => auth()->user()->employees->sortBy('name')]);
     }
 
 
@@ -40,20 +38,21 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Employee $employee)
+    public function store(Request $request, Employee $employee, User $user)
     {
         
         $employee->name = $request->input('name');
         $employee->email = $request->input('email');
-        $employee->user_id = auth()->user()->id;
-        ($employee->user()->associate($request->user()));
+        
         
 
         $request->validate([
             'name' => 'required|max:13|min:3',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:employe,email,'.$employee->id,
         ]);
 
+        $employee->user_id = auth()->user()->id;
+        ($employee->user()->associate($request->user()));
         $employee->save();
         return redirect()->route('employees.index');
 
@@ -79,8 +78,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        $employeeDetail = $employee;
-        return view('employees.edit', ['employeeDetail' => $employeeDetail]);
+        
+        return view('employees.edit', ['employeeDetail' => $employee]);
     }
 
     /**
@@ -92,15 +91,14 @@ class EmployeeController extends Controller
      */
     public function update(Request $request,Employee $employee)
     {
-        $updatedName = $request->input('name');
-        $updatedEmail = $request-> input('email');
-
-        $request->validate([
+        
+        $data = $request->validate([
             'name' => 'required|max:13|min:3',
-            'email' => 'required|email',
-        ]);
+            'email' => 'required|email|unique:employe,email,'.$employee->id
+            ]
+        );
 
-        $employee->update(['name'=> $updatedName , 'email'=> $updatedEmail]);
+        $employee->update($data);
         return redirect()->route('employees.index');
     }
 
