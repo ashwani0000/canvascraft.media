@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,17 @@ Route::get('/employees/{employee:id}', [App\Http\Controllers\EmployeeController:
 Route::get('/employees/{employee:id}/edit', [App\Http\Controllers\EmployeeController::class , 'edit'])->name('employees.edit');
 Route::put('/employees/{employee:id}', [App\Http\Controllers\EmployeeController::class , 'update'])->name('employees.update');
 Route::delete("/employees/{employee:id}", [App\Http\Controllers\EmployeeController::class , 'destroy'])->name('employees.destroy');
+
+
+Route::get('/users', [App\Http\Controllers\UserController::class , 'index'])->name('users.index');
+Route::get('/users/{user:id}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+Route::get('/users/{user:id}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+
+
+
+
+
+// At last only
 Route::any('{query}',
     function() { return redirect('/'); })
     ->where('query', '.*');

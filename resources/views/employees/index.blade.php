@@ -9,7 +9,7 @@
 
 
 <div class="trContainer">
-<table>
+<table id="table">
 
         <tr>
             <td>Name</td>
@@ -26,19 +26,20 @@
             <a href="{{ route('employees.edit', [ 'employee' => $employee->id ]) }}" class="edit">Edit</a>
             <a href="{{ route('employees.show', [ 'employee' => $employee->id]) }}" class="edit">Show</a>
 
-                <form method="POST" id="deleteform" style="margin-bottom: 0;" action="{{ route('employees.destroy', [ 'employee' => $employee->id ]) }}">
+                <form method="POST" class="deleteform" style="margin-bottom: 0;" action="{{ route('employees.destroy', [ 'employee' => $employee->id ]) }}">
                     @csrf
                     @method('delete')
-                   <input class="input_delete" onclick="deleteConfirmation('{{$employee->id}}')" type="submit" value="Delete">
+                   <input class="input_delete" type="submit" value="Delete">
                 </form>   
+                
         </td>
         
     </tr>
 </div>
 @endforeach
-
+@include('employees.deletesweetalert')
+@include('employees.datatable')
 </table>
-@include('employees.deletesweetalert');
 </div>
 </div>
 

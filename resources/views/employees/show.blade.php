@@ -20,7 +20,7 @@
                 <td class="email">{{$employeeDetail->email}}</td>
                 <td class="actions">
                     <a href="{{ route('employees.edit' , [ 'employee' => $employeeDetail->id ]) }}" class="edit">Edit</a>
-                    <form method="POST" style="margin: 0;" id="deleteform" action="{{ route('employees.destroy', [ 'employee' => $employeeDetail->id ]) }}">
+                    <form method="POST" style="margin: 0;" class="deleteform" action="{{ route('employees.destroy', [ 'employee' => $employeeDetail->id ]) }}">
                         @csrf
                         @method('delete')
                         <input class="input_delete" onclick="deleteConfirmation('{{$employeeDetail->id}}')" type="submit" value="Delete">

@@ -15,7 +15,7 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
         return view("employees.index", ['employees' => auth()->user()->employees->sortBy('name')]);
     }
