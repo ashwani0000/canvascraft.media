@@ -32,9 +32,9 @@ Route::put('/employees/{employee:id}', [App\Http\Controllers\EmployeeController:
 Route::delete("/employees/{employee:id}", [App\Http\Controllers\EmployeeController::class , 'destroy'])->name('employees.destroy');
 
 
-Route::get('/users', [App\Http\Controllers\UserController::class , 'index'])->name('users.index');
+
 Route::get('/users/{user:id}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
-Route::get('/users/{user:id}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+Route::patch('/users/{user:id}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
 
 
 

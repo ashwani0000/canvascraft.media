@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/addemploye.css') }}">
 
 <script>
 function goBack() {
@@ -8,9 +9,11 @@ function goBack() {
     <a onclick="goBack()" style="color: white;cursor:pointer; background-color: brown;padding:10px;border-radius: 10px;text-decoration:none;margin-top: 40px;">Go Back</span></a>
 </div>
     <div class="addemployeContainer">
+        <!-- {{$user}} -->
     <form method="POST" action="{{route('users.update', ['user' => $user->id])}}">
     @csrf
-        @method('post')
+        @method('patch')
+        {{ Form::model($user, ['route' => ['users.edit' , $user->id], 'method' => 'patch']) }}
     <div class="name">
         <label for="name" class="m-right">Name</label>
         <input type="text" autofocus class="input" name="name" value= "{{$user->name}}" placeholder="name" />

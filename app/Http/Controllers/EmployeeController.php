@@ -91,12 +91,13 @@ class EmployeeController extends Controller
      */
     public function update(Request $request,Employee $employee)
     {
-        
+        // dd($employee);
         $data = $request->validate([
             'name' => 'required|max:13|min:3',
             'email' => 'required|email|unique:employe,email,'.$employee->id
             ]
         );
+        
 
         $employee->update($data);
         return redirect()->route('employees.index');
