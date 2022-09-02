@@ -39,5 +39,32 @@ class UserController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function index(Request $request, User $user){
+        dd($user);
+        dd($request);
+        if($request->input('email')->get()){
+            dd($request->get('email'));
+            $email = $request->get('email');
+            $data = $user->where('email', $email)->count();
+            
+            dd($data);
+            if($data>0){
+                echo 'notunique';
+            }
+            else{
+                echo 'unique'; 
+            }
+        }
+    }
+
+    public function checkEmail(Request $request, User $user){
+        $email = $request->input('email');
+        $isExists = \App\Models\User::where('email',$email)->first();
+        if($isExists){
+            return response()->json(array("exists" => true));
+        }else{
+            return response()->json(array("exists" => false));
+        }
+    }
 
 }

@@ -6,7 +6,6 @@ use App\Models\Employee;
 use App\Models\User;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -66,8 +65,15 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        $employeeDetail = $employee;    
-        return view('employees.show', ['employeeDetail' => $employeeDetail]);
+
+        if(auth()->user()->id == $employee->user_id){
+            $employeeDetail = $employee;    
+            return view('employees.show', ['employeeDetail' => $employeeDetail]);
+            }else{
+                dd('Employee Not Found');  
+            }
+
+        
     }
 
     /**
@@ -76,10 +82,13 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit(Employee $employee, User $user)
     {
-        
+        if(auth()->user()->id == $employee->user_id){
         return view('employees.edit', ['employeeDetail' => $employee]);
+        }else{
+            dd('Employee Not Found');  
+        }
     }
 
     /**
@@ -109,10 +118,13 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
-    {
+    public function destroy(Employee $employee){
 
+    if(auth()->user()->id == $employee->user_id){
         $employee->delete();
         return redirect()->route('employees.index');
-    }
+        }else{
+            dd('Employee Not Found');  
+        }
+}
 }

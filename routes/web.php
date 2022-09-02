@@ -27,7 +27,7 @@ require __DIR__.'/auth.php';
 Route::resources(['employees' => EmployeeController::class]);
 
 Route::get('/employees/{employee:id}', [App\Http\Controllers\EmployeeController::class, 'show'])->name('employees.show');  
-Route::get('/employees/{employee:id}/edit', [App\Http\Controllers\EmployeeController::class , 'edit'])->name('employees.edit');
+Route::get('/employees/{employee:id}/edit', [App\Http\Controllers\EmployeeController::class , 'edit'])->name('employees.edit')->middleware('auth');;
 Route::put('/employees/{employee:id}', [App\Http\Controllers\EmployeeController::class , 'update'])->name('employees.update');
 Route::delete("/employees/{employee:id}", [App\Http\Controllers\EmployeeController::class , 'destroy'])->name('employees.destroy');
 
@@ -36,8 +36,7 @@ Route::delete("/employees/{employee:id}", [App\Http\Controllers\EmployeeControll
 Route::get('/users/{user:id}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
 Route::patch('/users/{user:id}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
 
-
-
+Route::post('/checkemail', [\App\Http\Controllers\UserController::class, 'checkEmail']);
 
 
 // At last only
