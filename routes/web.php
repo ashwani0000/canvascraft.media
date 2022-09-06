@@ -24,10 +24,14 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resources(['employees' => EmployeeController::class]);
+// Route::resources(['employees' => EmployeeController::class]);
+Route::get('/employees/data', [ \App\Http\Controllers\EmployeeController::class, 'data' ])->name('employees.data');
 
+
+Route::get('/employees/create', [App\Http\Controllers\EmployeeController::class, 'create'])->name('employees.create');
+Route::get('/employees', [App\Http\Controllers\EmployeeController::class , 'index'])->name('employees.index');
 Route::get('/employees/{employee:id}', [App\Http\Controllers\EmployeeController::class, 'show'])->name('employees.show');  
-Route::get('/employees/{employee:id}/edit', [App\Http\Controllers\EmployeeController::class , 'edit'])->name('employees.edit')->middleware('auth');;
+Route::get('/employees/{employee:id}/edit', [App\Http\Controllers\EmployeeController::class , 'edit'])->name('employees.edit')->middleware('auth');
 Route::put('/employees/{employee:id}', [App\Http\Controllers\EmployeeController::class , 'update'])->name('employees.update');
 Route::delete("/employees/{employee:id}", [App\Http\Controllers\EmployeeController::class , 'destroy'])->name('employees.destroy');
 
@@ -43,3 +47,6 @@ Route::post('/checkemail', [\App\Http\Controllers\UserController::class, 'checkE
 Route::any('{query}',
     function() { return redirect('/'); })
     ->where('query', '.*');
+
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

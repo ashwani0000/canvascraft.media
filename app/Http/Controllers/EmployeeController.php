@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FieldRequest;
 use App\Models\Employee;
 use App\Models\User;
 
+use \Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Empty_;
 
 class EmployeeController extends Controller
 {
@@ -16,7 +19,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view("employees.index", ['employees' => auth()->user()->employees->sortBy('name')]);
+
+        $userid = auth()->user()->id;
+        $employee = Employee::where('user_id' ,$userid)->paginate(5);
+        return view("employees.index", ['employees' => $employee]);
     }
 
 
@@ -37,23 +43,18 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Employee $employee, User $user)
+    public function store(Request $request, Employee $employee, FieldRequest $fieldRequest)
     {
         
         $employee->name = $request->input('name');
         $employee->email = $request->input('email');
         
-        
-
-        $request->validate([
-            'name' => 'required|max:13|min:3',
-            'email' => 'required|email|unique:employe,email,'.$employee->id,
-        ]);
+        $fieldRequest->validated();
 
         $employee->user_id = auth()->user()->id;
         ($employee->user()->associate($request->user()));
         $employee->save();
-        return redirect()->route('employees.index');
+        return redirect()->route('employees.index')->with('success', 'Employee Added Successfully');
 
     }
 
@@ -98,18 +99,12 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Employee $employee)
+    public function update(FieldRequest $request,Employee $employee)
     {
         // dd($employee);
-        $data = $request->validate([
-            'name' => 'required|max:13|min:3',
-            'email' => 'required|email|unique:employe,email,'.$employee->id
-            ]
-        );
-        
-
+        $data = $request->validated();
         $employee->update($data);
-        return redirect()->route('employees.index');
+        return redirect()->route('employees.index')->with('success','Employee Updated Successfully');
     }
 
     /**
@@ -122,9 +117,25 @@ class EmployeeController extends Controller
 
     if(auth()->user()->id == $employee->user_id){
         $employee->delete();
-        return redirect()->route('employees.index');
+        return redirect()->route('employees.index')->with('warning','Employee Deleted Successfully')->with('danger', 'Employee Details Deleted Successfully');
         }else{
             dd('Employee Not Found');  
         }
 }
+
+public function data()
+    {
+        $userid = auth()->user()->id;
+        $data = Employee::where('user_id' ,$userid)->orderBy('id', 'desc')
+        ->get();
+    
+    return DataTables::of($data)
+            // ->addColumns('name', 'email')    
+            ->addColumn('Action', function($row) {
+                   return '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+    
 }

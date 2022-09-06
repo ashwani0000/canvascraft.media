@@ -57,7 +57,7 @@ class UserController extends Controller
         }
     }
 
-    public function checkEmail(Request $request, User $user){
+    public function checkEmail(Request $request){
         $email = $request->input('email');
         $isExists = \App\Models\User::where('email',$email)->first();
         if($isExists){
