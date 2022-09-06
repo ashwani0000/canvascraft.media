@@ -29,6 +29,6 @@ formdelete.forEach(element => {
 }, false);
 }
 });
-console.log(formdelete);
+// console.log(formdelete);
 
 </script>

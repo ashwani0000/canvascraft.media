@@ -17,12 +17,27 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $userid = auth()->user()->id;
-        $employee = Employee::where('user_id' ,$userid)->paginate(5);
-        return view("employees.index", ['employees' => $employee]);
+        // dd($request->ajax());
+        if ($request->ajax()) {
+            $data = Employee::where('user_id' ,$userid);
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                            $btn = '<a href="' . route('employees.edit', [ 'employee' => $row->id ]). '" class="edit btn btn-primary btn-sm">Edit</a>';
+                            $btn = $btn .'<a href="' . route('employees.show', [ 'employee' => $row->id ]). '" class="show btn btn-danger btn-sm">Show</a>';
+                            return $btn;
+                    })
+
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+
+        // $employee = Employee::where('user_id' ,$userid);
+        return view("employees.index");
     }
 
 
@@ -123,19 +138,19 @@ class EmployeeController extends Controller
         }
 }
 
-public function data()
-    {
-        $userid = auth()->user()->id;
-        $data = Employee::where('user_id' ,$userid)->orderBy('id', 'desc')
-        ->get();
+// public function data()
+//     {
+//         $userid = auth()->user()->id;
+//         $data = Employee::where('user_id' ,$userid)->orderBy('id', 'desc')
+//         ->get();
     
-    return DataTables::of($data)
-            // ->addColumns('name', 'email')    
-            ->addColumn('Action', function($row) {
-                   return '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-    }
+//     return DataTables::of($data)
+//             // ->addColumns('name', 'email')    
+//             ->addColumn('Action', function($row) {
+//                    return '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+//             })
+//             ->rawColumns(['action'])
+//             ->make(true);
+//     }
     
 }

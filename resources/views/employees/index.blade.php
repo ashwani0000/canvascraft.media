@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('/css/showemploye.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/showemploye.css') }}"> -->
 
 <x-app-layout>
     <x-slot name="header">
@@ -26,48 +26,32 @@
 
 <div class="container">
     <div class="links">
-        <a  class="link"  href="/dashboard">Go Back</span></a>
         <a  class="link"  href="{{route('employees.create')}}">Add Employee</a> 
     </div>
 
 
     <div class="trContainer">
     <table id="table" class="datatable">
+        
         <thead>
             <tr>
-                <th width="35%">Name</th>
-                <th width="35%">Email</th>
-                <th width="30%">Action</th>
+                <th width="40%">Name</th>
+                <th width="40%">Email</th>
+                <th width="40%">Action</th>
+
             </tr>
         </thead>
+        <tbody>
+        </tbody>
 
-    <!-- @foreach($employees as $employee)
-        <tr id = "{{$employee->id}}">
-            
-            <td class="name">{{$employee->name}}</td>
-            <td class="email">{{$employee->email}}</td>
-            <td class="actions">
-                <a class="link"  href="{{ route('employees.edit', [ 'employee' => $employee->id ]) }}" class="edit">Edit</a>
-                <a  class="link" href="{{ route('employees.show', [ 'employee' => $employee->id]) }}" class="edit">Show</a>
 
-                    <form method="POST" class="deleteform" style="margin-bottom: 0;" action="{{ route('employees.destroy', [ 'employee' => $employee->id ]) }}">
-                        @csrf
-                        @method('delete')
-                    <input class="input_delete" type="submit" value="Delete">
-                    </form>   
-                    
-            </td>
-            
-        </tr>
-</div>
-@endforeach -->
 
 @include('employees.deletesweetalert')
 
 </table>
 
 </div>
-{{ $employees->links() }}
+
 
 
 
@@ -86,13 +70,21 @@
     </div>
     
 </x-app-layout>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>  
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
+      integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 <script type="text/javascript">
-        $(document).ready(function() {
-            var table = $('#table').DataTables({
+        $(function() {
+            console.log('entered')
+            var table = $('#table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('employees.index') }}",
@@ -102,6 +94,7 @@
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]   
             });
+            // console.log(table);
         });
         </script>
 
